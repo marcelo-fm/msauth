@@ -19,7 +19,7 @@ type RecordProvider interface {
 	HasRecord() (bool, error)
 }
 
-func New(p RecordProvider, appName, clientID, tenantID string) (*Auth, error) {
+func New(p RecordProvider, appName, clientID, tenantID string, scopes []string) (*Auth, error) {
 	record, err := p.RetrieveRecord()
 	if err != nil {
 		return nil, err
@@ -48,6 +48,7 @@ func New(p RecordProvider, appName, clientID, tenantID string) (*Auth, error) {
 	auth := &Auth{
 		Record:     record,
 		credential: cred,
+		Scopes:     scopes,
 		p:          p,
 	}
 	return auth, nil
